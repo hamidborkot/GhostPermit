@@ -1,0 +1,23 @@
+cff-version: 1.2.0
+message: "If you use this research, please cite it as below."
+type: article
+authors:
+  - family-names: "Borkot Tulla"
+    given-names: "MD. Hamid"
+title: "GhostPermit: Cross-Permission Data Exfiltration via Prompt Injection in Multi-Tool LLM Agents"
+year: 2026
+journal: "IEEE Transactions on Information Forensics and Security"
+status: "under-review"
+repository-code: "https://github.com/hamidborkot/GhostPermit"
+license: MIT
+keywords:
+  - LLM security
+  - prompt injection
+  - multi-tool agents
+  - data exfiltration
+  - AI safety
+  - agentic AI
+  - cross-permission attack
+  - PARS metric
+  - AgentWorm
+  - CoT hijacking
