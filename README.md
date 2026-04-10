@@ -10,7 +10,7 @@
 
 **GhostPermit: Cross-Permission Data Exfiltration via Prompt Injection in Multi-Tool LLM Agents**
 
-*MD. Hamid Borkot Tulla*\
+*MD. Hamid Borkot Tulla*\\
 *Submitted to IEEE Transactions on Information Forensics and Security (TIFS), 2026*
 
 </div>
@@ -19,15 +19,17 @@
 
 ## Overview
 
-**GhostPermit** is the first systematic study of **cross-permission data exfiltration** in multi-tool LLM agents. We demonstrate that a malicious prompt injected into one permitted data source silently directs the agent to harvest and compile sensitive data from *all* other granted tools — calendar, contacts, location, notes, and email — into a single exfiltration payload, without the user's knowledge.
+**GhostPermit** is a systematic study of **cross-permission data exfiltration** in multi-tool LLM agents. We show that a malicious prompt injected into one permitted data source can silently direct an agent to harvest and compile sensitive data from other granted tools — including calendar, contacts, location, notes, and email — into a single exfiltration payload, without the user's knowledge.
+
+This repository contains the attack implementations, evaluation scripts, analysis scripts, and the saved experimental outputs used in the paper. The code is organized for reproducibility and intended for offline analysis of the saved results.
 
 ### Contributions
 
-- 🔴 **GhostPermit Attack** — a prompt injection that exploits cross-tool trust in LLM agents
-- 📐 **PARS** (Permission-weighted Attack Risk Score) — a quantitative risk metric for multi-tool agents
-- 🐛 **AgentWorm** — a self-propagating variant that spreads across tool stores
-- 🔵 **CoT Hijacking** — an attack corrupting Chain-of-Thought reasoning mid-inference
-- 🛡️ **Defense Evaluation** — LlamaGuard 22M and 86M both fail to detect GhostPermit (0% detection)
+- 🔴 **GhostPermit Attack** — a prompt injection that exploits cross-tool trust in LLM agents.
+- 📐 **PARS** (Permission-weighted Attack Risk Score) — a quantitative risk metric for multi-tool agents.
+- 🐛 **AgentWorm** — a self-propagating variant that spreads across tool stores.
+- 🔵 **CoT Hijacking** — an attack corrupting Chain-of-Thought reasoning mid-inference.
+- 🛡️ **Defense Evaluation** — LlamaGuard 22M and 86M both fail to detect GhostPermit in our experiments.
 
 ### Key Results
 
@@ -45,53 +47,51 @@
 ---
 
 ## Repository Structure
-
-```
 GhostPermit/
 │
-├── README.md                        ← This file
-├── LICENSE                          ← MIT License
-├── CITATION.cff                     ← Citation metadata (GitHub standard)
-├── requirements.txt                 ← Python dependencies
+├── README.md ← This file
+├── LICENSE ← MIT License
+├── CITATION.cff ← Citation metadata
+├── requirements.txt ← Python dependencies
 │
-├── attack/                          ← Attack implementations
-│   ├── ghostpermit_attack.py        ← GhostPermit core injection logic
-│   ├── agentworm.py                 ← Self-propagating worm variant
-│   ├── cot_hijacking.py             ← Chain-of-Thought hijacking
-│   └── prompts/
-│       ├── ghostpermit_prompt.txt   ← Injection prompt template
-│       ├── agentworm_prompt.txt     ← Worm propagation payload
-│       └── cot_hijack_prompt.txt    ← CoT corruption payload
+├── attack/ ← Attack implementations
+│ ├── ghostpermit_attack.py ← GhostPermit core injection logic
+│ ├── agentworm.py ← Self-propagating worm variant
+│ ├── cot_hijacking.py ← Chain-of-Thought hijacking
+│ └── prompts/
+│ ├── ghostpermit_prompt.txt ← Injection prompt template
+│ ├── agentworm_prompt.txt ← Worm propagation payload
+│ └── cot_hijack_prompt.txt ← CoT corruption payload
 │
-├── evaluation/                      ← Evaluation pipeline
-│   ├── run_experiment.py            ← Main experiment runner (all models)
-│   ├── judge.py                     ← Keyword-based ASR judge
-│   ├── pars.py                      ← PARS metric computation
-│   ├── utility_eval.py              ← Utility evaluation (200 benign tasks)
-│   └── judge_validation.py          ← Cohen's κ validation script
+├── evaluation/ ← Evaluation pipeline
+│ ├── run_experiment.py ← Main experiment runner
+│ ├── judge.py ← Keyword-based ASR judge
+│ ├── pars.py ← PARS metric computation
+│ ├── utility_eval.py ← Utility evaluation (200 benign tasks)
+│ └── judge_validation.py ← Cohen's κ validation script
 │
-├── defense/                         ← Defense evaluation
-│   ├── llamaguard_eval.py           ← LlamaGuard 22M + 86M evaluation
-│   └── defense_baseline.py          ← Keyword-filter baseline comparison
+├── defense/ ← Defense evaluation
+│ ├── llamaguard_eval.py ← LlamaGuard 22M + 86M evaluation
+│ └── defense_baseline.py ← Keyword-filter baseline comparison
 │
-├── data/                            ← All experimental results
-│   ├── README_data.md               ← Data schema and description
-│   ├── ghostpermit_results.csv      ← Main GhostPermit results (2,535 trials)
-│   ├── agentworm_results.csv        ← AgentWorm propagation (1,154 trials)
-│   ├── cot_hijacking_results.csv    ← CoT hijacking results (240 trials)
-│   └── defense_results.csv          ← LlamaGuard defense results (400 trials)
+├── data/ ← All experimental results
+│ ├── README_data.md ← Data schema and description
+│ ├── ghostpermit_results.csv ← Main GhostPermit results
+│ ├── agentworm_results.csv ← AgentWorm propagation results
+│ ├── cot_hijacking_results.csv ← CoT hijacking results
+│ └── defense_results.csv ← Defense evaluation results
 │
-├── analysis/                        ← Figures and tables
-│   ├── generate_figures.py          ← Reproduce all paper figures
-│   ├── generate_tables.py           ← Reproduce all paper tables (LaTeX)
-│   └── statistical_tests.py         ← Kruskal-Wallis + Mann-Whitney tests
+├── analysis/ ← Figures and tables
+│ ├── generate_figures.py ← Reproduce paper figures
+│ ├── generate_tables.py ← Reproduce paper tables (LaTeX)
+│ └── statistical_tests.py ← Statistical significance tests
 │
-└── notebooks/                       ← Jupyter notebooks
-    ├── 01_main_results.ipynb        ← GhostPermit ASR analysis
-    ├── 02_pars_analysis.ipynb       ← PARS metric deep-dive
-    ├── 03_agentworm_analysis.ipynb  ← Worm propagation analysis
-    └── 04_defense_analysis.ipynb    ← Defense evaluation notebook
-```
+└── notebooks/ ← Jupyter notebooks
+├── 01_main_results.ipynb ← GhostPermit ASR analysis
+├── 02_pars_analysis.ipynb ← PARS metric deep-dive
+├── 03_agentworm_analysis.ipynb ← Worm propagation analysis
+└── 04_defense_analysis.ipynb ← Defense evaluation notebook
+
 
 ---
 
@@ -147,20 +147,23 @@ export GROQ_API_KEY="your_groq_api_key"
 export GITHUB_MODELS_KEY="your_github_token"
 ```
 
-### 3. Reproduce Results from Saved Data (Recommended)
+### 3. Reproduce Results from Saved Data
 
 ```bash
-# Regenerate all paper figures from saved CSVs
-python analysis/generate_figures.py --from-data
+# Regenerate figures
+python analysis/generate_figures.py
 
-# Regenerate all LaTeX tables
-python analysis/generate_tables.py --from-data
+# Regenerate LaTeX tables
+python analysis/generate_tables.py
 
-# Run statistical significance tests
+# Run statistical tests
 python analysis/statistical_tests.py
+
+# Validate the defense evaluator
+python defense/llamaguard_eval.py
 ```
 
-### 4. Re-run Full Experiments (requires API keys + ~8 hours)
+### 4. Re-run Full Experiments
 
 ```bash
 # GhostPermit: 9 models × 10 combos × 30 trials
@@ -217,8 +220,7 @@ This paper does not provide sufficient detail to enable direct reproduction of t
 
 ```bibtex
 @article{borkot2026ghostpermit,
-  title     = {GhostPermit: Cross-Permission Data Exfiltration via Prompt
-               Injection in Multi-Tool LLM Agents},
+  title     = {GhostPermit: Cross-Permission Data Exfiltration via Prompt Injection in Multi-Tool LLM Agents},
   author    = {Borkot Tulla, {MD. Hamid}},
   journal   = {IEEE Transactions on Information Forensics and Security},
   year      = {2026},
