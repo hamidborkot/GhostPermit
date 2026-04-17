@@ -1,0 +1,5 @@
+Defense,Precision(%),Recall(%),F1,FPR(%)
+PromptGuard-2 (Classifier),0.0,0.0,0.0,1.8
+PARS-Gated Access Control,73.6,43.3,0.545,39.6
+Permission Quarantine Filter,90.8,70.0,0.791,18.2
+CTIA Forensic Audit Log,97.8,81.9,0.892,4.6
